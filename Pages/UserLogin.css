@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(90deg, #121212 70%, #02028B 100%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .logo-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  
+  .logo-container .logo {
+    width: 200px;
+    height: auto;
+  }
+  
+  .form-container {
+    max-width: 500px;
+    width: 100%;
+    padding: 2.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    z-index: 1;
+    height: auto;
+  }
+  
+  .form-container h1 {
+    font-size: 3rem;
+    margin: 0;
+    padding-bottom: 1.5rem;
+  }
+  
+  .form-container .slogan {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin: 1rem 0 1.5rem 0;
+  }
+  
+  .form-container input {
+    width: 100%;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #2a2a2a;
+    color: white;
+    font-size: 1.1rem;
+  }
+  
+  .form-container input:focus {
+    outline: none;
+    border: 2px solid #00ff00;
+  }
+  
+  .form-container a {
+    color: #00ff00;
+    text-decoration: none;
+  }
+  
+  .form-container a:hover {
+    text-decoration: underline;
+  }
+  
+  .form-container button {
+    background-color: #00ff00;
+    color: #121212;
+    border: none;
+    padding: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .form-container button:hover {
+    background-color: #00cc00;
+  }
+  
+  .footer-text {
+    font-size: 0.8rem;
+    margin-top: 2rem;
+    color: #cccccc;
+  }
+
+  .NoAccount {
+    padding-top: 50px;
+  }
+
+ 

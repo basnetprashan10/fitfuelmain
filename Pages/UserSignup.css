@@ -1,0 +1,127 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #02028B, #121212);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    position: relative;
+  }
+  
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.logo-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.logo-container .logo {
+  width: 200px;
+  height: auto;
+}
+
+.form-container {
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.form-container h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  padding-bottom: 1rem;
+}
+
+.form-container .slogan {
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.form-container input,
+.form-container select {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #2a2a2a;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.form-container input:focus,
+.form-container select:focus {
+  outline: none;
+  border: 2px solid #00ff00;
+}
+
+.form-container select {
+  height: 50px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-right: 1.5rem;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 10 10%22 fill=%22white%22%3E%3Cpath d=%22M0 0L5 5L10 0%22/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 0.7rem 0.7rem;
+}
+
+.form-container a {
+  color: #00ff00;
+  text-decoration: none;
+}
+
+.form-container a:hover {
+  text-decoration: underline;
+}
+
+.form-container button {
+  background-color: #00ff00;
+  color: #121212;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.form-container button:hover {
+  background-color: #00cc00;
+}
+
+.footer-text {
+  font-size: 0.8rem;
+  margin-top: 2rem;
+  color: #cccccc;
+}
+
+.DoAccount {
+    padding-top: 50px;
+}
