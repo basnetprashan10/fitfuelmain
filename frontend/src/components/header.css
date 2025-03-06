@@ -1,0 +1,153 @@
+/* Default styles for larger screens */
+header {
+  width: 100%;
+  padding: 0 20px;
+  background: rgba(0, 0, 0, 0.91);
+  box-shadow: 0 4px 8px rgba(167, 39, 39, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 120px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo-containerr,
+.title-container,
+.user-profile {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-containerr {
+  justify-content: flex-start;
+}
+
+.logo {
+  width: 100px;
+  height: auto;
+  margin-left: 100px;
+}
+
+.title-container {
+  flex-direction: column;
+  text-align: center;
+  padding-bottom: 50px;
+  margin-top: 50px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.slogan {
+  font-size: 18px;
+  color: #888;
+}
+
+.user-profile-contaainer {
+  text-align: center;
+  margin-left: 150px;
+}
+
+.user-icon {
+  font-size: 60px;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.username {
+  font-size: 14px;
+  color: #fff;
+  margin-top: 5px;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  header {
+    height: 100px; /* Reduce height */
+    padding: 0 10px; /* Adjust padding */
+  }
+
+  .logo {
+    width: 80px; /* Reduce logo size */
+    margin-left: 50px; /* Adjust margin */
+  }
+
+  .title-container {
+    flex-direction: column;
+    text-align: center;
+    padding-bottom: 30px;
+    margin-top: 30px;
+  }
+
+  h1 {
+    font-size: 20px; /* Reduce font size */
+  }
+
+  .slogan {
+    font-size: 14px; /* Reduce slogan font size */
+  }
+
+  .user-profile-contaainer {
+    margin-left: 30px; /* Adjust margin */
+  }
+
+  .user-icon {
+    font-size: 50px; /* Reduce icon size */
+  }
+
+  .username {
+    font-size: 12px; /* Reduce username font size */
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    height: 80px; /* Further reduce height */
+    position: fixed;
+  }
+
+  .logo {
+    width: 60px; /* Smaller logo size */
+    margin-left: 20px; /* Adjust margin */
+  }
+
+  .title-container {
+    padding-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  h1 {
+    font-size: 18px; /* Further reduce font size */
+  }
+
+  .slogan {
+    font-size: 12px; /* Further reduce slogan font size */
+  }
+
+  .user-profile-contaainer {
+    margin-left: 15px;
+  }
+
+  .user-icon {
+    font-size: 40px; /* Smaller user icon */
+  }
+
+  .username {
+    font-size: 10px; /* Smaller username font size */
+  }
+}

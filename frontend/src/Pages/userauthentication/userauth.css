@@ -1,0 +1,173 @@
+/* Logo container */
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+
+/* Logo styling */
+.logo2 {
+  width: 80px;
+  height: auto;
+}
+
+/* Slogan styling */
+.slogan2 {
+  font-size: 0.9rem;
+  color: #ffffff;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Center the signup and login pages */
+.signup-page,
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+/* Ensure the header does not interfere with centering */
+.page-header {
+  width: 100%;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(212, 73, 73, 0.5);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  height: 110px;
+}
+
+/* Center form inside the container */
+.form-container {
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  background: rgba(22, 22, 22, 0.91);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  margin: auto; /* Centers the form */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Input, select and button styling */
+.form-container input,
+.form-container select,
+.form-container button {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #2a2a2a;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Footer should stay at the bottom */
+.footer {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .signup-page,
+  .login-page {
+    padding: 10px;
+  }
+
+  .form-container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+}
+
+/* Signup form title */
+.form-container h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: white;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+/* Focused input and select styles */
+.form-container input:focus,
+.form-container select:focus {
+  outline: none;
+  border: 2px solid #00ff00;
+}
+
+/* Link styling */
+.form-container a {
+  color: #00ff00;
+  text-decoration: none;
+}
+
+.form-container a:hover {
+  text-decoration: underline;
+}
+
+/* Signup button styling */
+.form-container button {
+  background-color: rgb(20, 127, 177);
+  color: #ffffff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.form-container button:hover {
+  background-color: #087be7;
+}
+
+/* Footer text styling */
+.footer-text {
+  font-size: 0.8rem;
+  margin-top: 2rem;
+  color: #cccccc;
+}
+
+/* Login link styling */
+.DoAccount {
+  padding-top: 20px;
+  color: white;
+}
+
+/* Responsive styling */
+@media (max-width: 600px) {
+  .logo-container {
+    margin: 0;
+    text-align: center;
+    align-items: center;
+  }
+
+  .logo {
+    width: 120px;
+  }
+
+  .signup-page {
+    padding: 10px;
+  }
+
+  .form-container {
+    padding: 1.5rem;
+  }
+}

@@ -1,0 +1,57 @@
+.add-product-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin-left: 250px;
+  margin-top: 150px;
+  width: calc(100% - 250px); /* Fixed calculation */
+}
+
+.add-product-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.add-product-form1 {
+  display: flex;
+  flex-direction: column;
+  width: 500px; /* Full width to fit the rows */
+  gap: 20px; /* Increase space between rows */
+}
+
+.form-row {
+  display: flex; /* Use flexbox for rows */
+  justify-content: space-between; /* Space out the items */
+  gap: 20px; /* Space between inputs in the row */
+}
+
+.add-product-form1 input,
+.add-product-form1 textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%; /* Full width for inputs */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.button1 {
+  background-color: #0c18c4; /* Green background */
+  color: white; /* White text */
+  border: none; /* No border */
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button1:hover {
+  background-color: #ce17c5; /* Darker green on hover */
+}
+
+.add-product-form1 label {
+  font-size: 16px;
+  margin-bottom: 5px; /* Space between label and input */
+  font-weight: bold; /* Optional: Make the label bold */
+}

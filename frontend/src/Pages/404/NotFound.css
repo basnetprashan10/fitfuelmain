@@ -1,0 +1,23 @@
+/* src/NotFound.css */
+.notfound-container {
+  text-align: center;
+  padding: 50px;
+  background-color: #00000021;
+  margin-top: 150px;
+}
+
+.notfound-container h1 {
+  font-size: 100px;
+  color: #dfd7d7;
+}
+
+.notfound-container h2 {
+  font-size: 36px;
+  color: #979393;
+}
+
+.notfound-container p {
+  font-size: 18px;
+  color: #776e6e;
+}
+

@@ -1,0 +1,133 @@
+.dashboard-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  overflow: hidden;
+  padding: 20px;
+  margin-top: 120px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.dashboard-containt {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  padding: 0 20px;
+}
+
+.box-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allows wrapping for smaller screens */
+  gap: 20px;
+  width: auto;
+}
+
+.box {
+  background-color: rgba(29, 28, 36, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(172, 50, 50, 0.5);
+  height: 450px;
+  width: 300px; /* Adjusted height for better responsiveness */
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.box:hover {
+  transform: scale(1.05);
+}
+
+.icon {
+  font-size: 50px;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.box h3 {
+  font-size: 28px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.box p {
+  font-size: 16px;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1150px) {
+  .box {
+    width: 250px; /* Two columns on tablets */
+    height: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-containt {
+    padding: 10px;
+  }
+
+  .box {
+    width: 250px; /* Full width for mobile */
+    height: 300px;
+    padding: 20px;
+  }
+
+  .box h3 {
+    font-size: 26px; /* Slightly smaller headings */
+  }
+
+  .box p {
+    font-size: 16px; /* Reduce text size for better readability */
+  }
+
+  .icon {
+    font-size: 60px; /* Adjust icon size */
+  }
+
+  .btn {
+    font-size: 18px;
+    padding: 10px 15px;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 480px) {
+  .dashboard-containt {
+    padding: 10px;
+  }
+
+  .box {
+    width: 250px; /* Full width for mobile */
+    height: 200px;
+    padding: 20px;
+  }
+
+  .box h3 {
+    font-size: 16px; /* Slightly smaller headings */
+  }
+
+  .box p {
+    font-size: 12px; /* Reduce text size for better readability */
+  }
+
+  .icon {
+    font-size: 18px; /* Adjust icon size */
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 10px 15px;
+  }
+}

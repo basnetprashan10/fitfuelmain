@@ -1,0 +1,119 @@
+.admin-container {
+  display: flex;
+   margin-left: 250px;
+   margin-top: 150px;
+   width: calc(100% - 250px);
+   justify-content: center;
+}
+
+.main-content {
+  padding: 20px;
+}
+
+.dashboard-title {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.dashboard {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background-color: #201e1eec;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 6px 12px rgba(172, 23, 23, 0.2);
+  width: calc(50% - 20px); /* 2x2 layout */
+  text-align: center;
+  color: white;
+  margin-top: 20px;
+}
+
+.card h3 {
+  font-size: 22px;
+  margin-top: 10px;
+}
+
+.card p {
+  font-size: 40px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.icon {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .admin-container {
+    margin-left: 200px;
+  }
+  .card {
+    
+    border-radius: 10px;
+    padding: 20px;
+   
+    margin-top: 15px;
+  }
+  
+  .card h3 {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .card p {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .icon {
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .admin-container {
+    margin-left: 110px;
+    
+  }
+  .dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two cards per row */
+    gap: 10px; /* Adjust spacing between cards */
+    justify-content: center;
+  }
+
+  .card {
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 10px;
+    text-align: center;
+    height: 150px;
+    width: 200px; /* Make cards flexible */
+  }
+
+  .card h3 {
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .card p {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 5px;
+  }
+
+  .icon {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+}
