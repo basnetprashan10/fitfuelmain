@@ -44,14 +44,13 @@ const updateExerciseCategory = async (req, res) => {
     }
 
     if (req.file) {
-      // Correct file path
+      // Delete old image if it's not a URL
       const oldImagePath = path.join(
         __dirname,
         "../images",
         path.basename(existingCategory.img)
       );
 
-      // Delete old image if it's not a URL
       if (existingCategory.img && !existingCategory.img.startsWith("http")) {
         if (fs.existsSync(oldImagePath)) {
           fs.unlinkSync(oldImagePath);
@@ -77,6 +76,7 @@ const updateExerciseCategory = async (req, res) => {
   }
 };
 
+// Delete an exercise category and its image (if exists)
 const deleteExerciseCategory = async (req, res) => {
   const { id } = req.params;
 
@@ -86,6 +86,7 @@ const deleteExerciseCategory = async (req, res) => {
       return res.status(404).json({ message: "Category not found" });
     }
 
+    // Delete image if not a URL
     if (deletedCategory.img && !deletedCategory.img.startsWith("http")) {
       const imagePath = path.join(
         __dirname,

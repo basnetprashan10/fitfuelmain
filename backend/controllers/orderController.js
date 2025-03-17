@@ -1,25 +1,25 @@
-// controllers/orderController.js
+// Import models for Order and Cart
 const Order = require("../models/orderModel");
 const Cart = require("../models/cartModel");
 
+// Create a new order and clear the cart
 const createOrder = async (req, res) => {
   try {
     const { userId, items, shippingAddress, paymentMode, totalPrice } =
       req.body;
 
+    // Create new order instance
     const newOrder = new Order({
       userId,
       items,
       shippingAddress,
       paymentMode,
       totalPrice,
-      // No need to set orderNumber here, it will be generated automatically
     });
 
+    // Save the order and clear the cart for the user
     await newOrder.save();
-
-    // Clear the user's cart after the order is created
-    await clearCart(userId); // Call the clearCart function
+    await clearCart(userId);
 
     res
       .status(201)
@@ -30,13 +30,13 @@ const createOrder = async (req, res) => {
   }
 };
 
-// Clear entire cart function to be reused
+// Clear cart for the user (helper function)
 const clearCart = async (userId) => {
   try {
     const cart = await Cart.findOne({ userId });
 
     if (cart) {
-      cart.items = [];
+      cart.items = []; // Clear items in the cart
       await cart.save();
       console.log("Cart cleared successfully");
     }
@@ -45,14 +45,18 @@ const clearCart = async (userId) => {
   }
 };
 
+// Get all orders for a specific user by userId
 const getOrdersByUserId = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    const orders = await Order.find({ userId }).populate('items.productId');
-    
+    // Fetch orders and populate productId for items
+    const orders = await Order.find({ userId }).populate("items.productId");
+
     if (!orders.length) {
-      return res.status(404).json({ message: "No orders found for this user." });
+      return res
+        .status(404)
+        .json({ message: "No orders found for this user." });
     }
 
     res.status(200).json(orders);
@@ -62,19 +66,23 @@ const getOrdersByUserId = async (req, res) => {
   }
 };
 
-// Get all orders
+// Get all orders in the system, populating user and product details
 const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find().populate("items.productId");
+    const orders = await Order.find()
+      .populate("items.productId") // Populate productId details for items
+      .populate("userId", "fullname"); // Populate user details (fullname)
+
     res.status(200).json(orders);
   } catch (error) {
     console.error("Get all orders error:", error);
     res.status(500).json({ error: "Failed to retrieve orders" });
   }
 };
-// Update order status
+
+// Update the status of a specific order
 const updateOrderStatus = async (req, res) => {
-  const { orderId, status } = req.body; // Expect orderId and status in the request body
+  const { orderId, status } = req.body;
 
   if (!orderId || !status) {
     return res
@@ -89,7 +97,7 @@ const updateOrderStatus = async (req, res) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-    order.orderStatus = status; // Update the status
+    order.orderStatus = status; // Update order status
     await order.save();
 
     res
@@ -100,9 +108,50 @@ const updateOrderStatus = async (req, res) => {
     res.status(500).json({ message: "Failed to update order status" });
   }
 };
+
+// Get the count of orders grouped by status
+const getAllOrderStatusCount = async (req, res) => {
+  try {
+    const statusCounts = await Order.aggregate([
+      {
+        $group: {
+          _id: "$orderStatus", // Group by order status
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    // Convert the array of results into an object for easier access
+    const result = statusCounts.reduce((acc, { _id, count }) => {
+      acc[_id] = count;
+      return acc;
+    }, {});
+
+    // Ensure all statuses are included, even if their count is 0
+    const allStatuses = [
+      "pending",
+      "processing",
+      "shipped",
+      "delivered",
+      "canceled",
+    ];
+    allStatuses.forEach((status) => {
+      if (!result[status]) {
+        result[status] = 0;
+      }
+    });
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Get all order status count error:", error);
+    res.status(500).json({ error: "Failed to retrieve order status counts" });
+  }
+};
+
 module.exports = {
   createOrder,
   getAllOrders,
   getOrdersByUserId,
   updateOrderStatus,
+  getAllOrderStatusCount,
 };

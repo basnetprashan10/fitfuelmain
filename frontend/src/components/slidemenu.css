@@ -11,19 +11,20 @@
   left: 0;
   transition: transform 0.3s ease-in-out;
   margin-top: 135px;
+  z-index: 10;
 }
 
 /* Sidebar closed for mobile */
 @media screen and (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
-    width: 200px;
+    width: 250px;
     margin-top: 93px;
   }
   .sidebar.open {
     transform: translateX(0);
   }
-  .main-content{
+  .main-content {
     margin-left: 10px;
     display: inline;
   }
@@ -72,14 +73,17 @@
 /* Mobile menu toggle button */
 .menu-toggle {
   display: none;
-  position: absolute;
-  top: 15px;
-  left: 15px;
+  position: fixed;
   background: none;
+  margin-bottom: 80px;
+  margin-left: 20px;
   border: none;
   color: white;
   font-size: 24px;
   cursor: pointer;
+  bottom: 0;
+  background-color: #2216c5;
+  box-shadow: 0 4px 8px rgba(167, 39, 39, 0.5);
 }
 
 /* Show toggle button on small screens */

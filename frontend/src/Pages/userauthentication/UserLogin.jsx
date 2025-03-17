@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import API_URL from "../../config/apiconfig";
+import AuthContext from "../../context/SessionContext"; // Import AuthContext
 import "./userauth.css";
 import logo from "../../assets/Logo.png";
 
@@ -10,7 +9,9 @@ const UserLogin = () => {
   const [loginInput, setLoginInput] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
+  const { updateUserFromToken } = useContext(AuthContext); // Get function and user from context
   const currentYear = new Date().getFullYear();
 
   const handleSubmit = async (e) => {
@@ -26,26 +27,35 @@ const UserLogin = () => {
 
       const data = await response.json();
 
+      // Debugging line: log user type
+      if (data && data.user) {
+        console.log("User Type:", data.user.user_type); // Correctly access user_type
+      }
+
       if (!response.ok) {
         setError(data.message || "Login failed");
       } else {
-        localStorage.setItem("token", data.token);
-        // Navigate based on user role
-        switch (data.role) {
-          case "admin":
-            navigate("/admindashboard");
-            break;
-          case "seller":
-            navigate("/sellerdashboard");
-            break;
-          case "trainer":
-            navigate("/trainedashboard");
-            break;
-          case "user":
-          default:
-            navigate("/userdashboard");
-            break;
-        }
+        updateUserFromToken(data.token); // Update the user context after login
+        setSuccessMessage("Login successful! Redirecting...");
+
+        // Redirect based on user type after a delay
+        setTimeout(() => {
+          switch (data.user.user_type) {
+            case "Admin":
+              navigate("/admindashboard");
+              break;
+            case "Seller":
+              navigate("/sellerdashboard");
+              break;
+            case "Trainer":
+              navigate("/userdashboard");
+              break;
+            case "User":
+            default:
+              navigate("/userdashboard");
+              break;
+          }
+        }, 2000); // Redirect after 2 seconds
       }
     } catch (err) {
       setError("Server error, try again later");
@@ -53,44 +63,46 @@ const UserLogin = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="page-header">
-        <div className="logo-container">
-          <img src={logo} alt="Logo" className="logo2" />
-          <p className="slogan2">Where Strength Meets Nutrition</p>
+    <div className="loginsignuppage">
+      <div className="login-page">
+        <div className="page-header">
+          <div className="logo-container">
+            <img src={logo} alt="Logo" className="logo2" />
+            <p className="slogan2">Where Strength Meets Nutrition</p>
+          </div>
         </div>
-      </div>
 
-      <div className="form-container">
-        <div className="icon-container">
-          <FontAwesomeIcon icon={faUser} size="4x" />
+        <div className="form-container">
+          <h1>User Login</h1>
+          {error && <p className="error-message">{error}</p>}
+          {successMessage && (
+            <p className="success-message">{successMessage}</p>
+          )}
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Username or Email"
+              value={loginInput}
+              onChange={(e) => setLoginInput(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit">Login</button>
+          </form>
+          <p className="DoAccount">
+            New user? <a href="/usersignup">Sign Up</a>
+          </p>
         </div>
-        <h1>User Login</h1>
-        {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Username or Email"
-            value={loginInput}
-            onChange={(e) => setLoginInput(e.target.value)}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit">Login</button>
-        </form>
-        <p className="DoAccount">
-          New user? <a href="/usersignup">Sign Up</a>
-        </p>
-      </div>
-      <div className="footer">
-        <div className="footer-text">
-          &copy; {currentYear} FitFuel. All rights reserved.
+        <div className="footer">
+          <div className="footer-text">
+            &copy; {currentYear} FitFuel. All rights reserved.
+          </div>
         </div>
       </div>
     </div>

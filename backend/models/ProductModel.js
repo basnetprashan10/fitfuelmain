@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Product schema definition
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -26,7 +27,8 @@ const productSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-  }, // URL of the image
+  },
 });
 
+// Export the Product model
 module.exports = mongoose.model("Product", productSchema);

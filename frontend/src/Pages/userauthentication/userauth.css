@@ -1,23 +1,40 @@
+
+/* Apply the font to the entire page */
+.loginsignuppage {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #131414 0%, #153977 100%);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 /* Logo container */
 .logo-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 20px;
+  margin-left: 50px;
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
 /* Logo styling */
 .logo2 {
-  width: 80px;
+  width: 100px;
   height: auto;
 }
 
 /* Slogan styling */
 .slogan2 {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: #ffffff;
   margin-top: 10px;
   text-align: center;
+  font-weight: 300;
 }
 
 /* Center the signup and login pages */
@@ -28,49 +45,131 @@
   align-items: center;
   height: 100vh;
   flex-direction: column;
+  width: 100%;
 }
 
 /* Ensure the header does not interfere with centering */
 .page-header {
   width: 100%;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(212, 73, 73, 0.5);
   position: absolute;
   top: 0;
   left: 0;
   z-index: 10;
   display: flex;
-  height: 110px;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 /* Center form inside the container */
 .form-container {
   max-width: 400px;
   width: 100%;
-  padding: 2rem;
-  background: rgba(22, 22, 22, 0.91);
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
-  margin: auto; /* Centers the form */
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
+.form-container h1 {
+  margin-bottom: 20px;
+  font-size: 36px;
+}
 /* Input, select and button styling */
 .form-container input,
-.form-container select,
 .form-container button {
   width: 100%;
   padding: 0.8rem;
   margin: 0.5rem 0;
   border: none;
-  border-radius: 5px;
-  background-color: #2a2a2a;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
   color: white;
   font-size: 1rem;
   box-sizing: border-box;
+  transition: all 0.3s ease;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Focused input and select styles */
+.form-container input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Hover effects for inputs and buttons */
+.form-container input:hover,
+.form-container button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+/* Style for the select dropdown */
+.form-container select {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  appearance: none; /* Remove default arrow */
+  -webkit-appearance: none; /* Remove default arrow for Safari */
+  -moz-appearance: none; /* Remove default arrow for Firefox */
+}
+
+/* Style for the select dropdown options */
+.form-container select option {
+  background-color: #2a2a2a; /* Dark background for options */
+  color: white; /* White text for options */
+}
+
+/* Focused select styles */
+.form-container select:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Hover effects for select */
+.form-container select:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+/* Signup button styling */
+.form-container button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+
+/* Link styling */
+.form-container a {
+  color: #00ff00;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-container a:hover {
+  text-decoration: underline;
 }
 
 /* Footer should stay at the bottom */
@@ -78,80 +177,44 @@
   width: 100%;
   text-align: center;
   position: absolute;
-  bottom: 10px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-  .signup-page,
-  .login-page {
-    padding: 10px;
-  }
-
-  .form-container {
-    width: 90%;
-    padding: 1.5rem;
-  }
-}
-
-/* Signup form title */
-.form-container h1 {
-  font-size: 1.5rem;
-  margin: 0;
-  color: white;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
-/* Focused input and select styles */
-.form-container input:focus,
-.form-container select:focus {
-  outline: none;
-  border: 2px solid #00ff00;
-}
-
-/* Link styling */
-.form-container a {
-  color: #00ff00;
-  text-decoration: none;
-}
-
-.form-container a:hover {
-  text-decoration: underline;
-}
-
-/* Signup button styling */
-.form-container button {
-  background-color: rgb(20, 127, 177);
-  color: #ffffff;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 1rem;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.form-container button:hover {
-  background-color: #087be7;
-}
-
-/* Footer text styling */
-.footer-text {
+  bottom: 50px;
   font-size: 0.8rem;
-  margin-top: 2rem;
-  color: #cccccc;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Login link styling */
 .DoAccount {
   padding-top: 20px;
   color: white;
+  font-weight: 300;
 }
 
-/* Responsive styling */
+/* Error and success message styling */
+.error-message {
+  color: #ff6b6b;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 107, 107, 0.1);
+  border: 1px solid #ff6b6b;
+  border-radius: 8px;
+  text-align: center;
+  width: 100%;
+}
+
+.success-message {
+  color: #4caf50;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: rgba(76, 175, 80, 0.1);
+  border: 1px solid #4caf50;
+  border-radius: 8px;
+  text-align: center;
+  width: 100%;
+}
+
+/* Responsive adjustments */
 @media (max-width: 600px) {
   .logo-container {
     margin: 0;
@@ -159,8 +222,8 @@
     align-items: center;
   }
 
-  .logo {
-    width: 120px;
+  .logo2 {
+    width: 80px;
   }
 
   .signup-page {
@@ -168,6 +231,7 @@
   }
 
   .form-container {
+    width: 90%;
     padding: 1.5rem;
   }
 }

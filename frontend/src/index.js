@@ -21,6 +21,9 @@ const Layout = () => {
     "/editproduct/",
     "/addproducts",
     "/manageexercisecategory",
+    "/manageexercise",
+    "/manageorders",
+    "/sellerdashboard",
   ];
 
   // Convert the pathname to lowercase for case-insensitive comparison

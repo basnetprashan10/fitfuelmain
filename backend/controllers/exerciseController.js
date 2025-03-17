@@ -25,11 +25,13 @@ const getAllExercises = async (req, res) => {
 
 // Add a new exercise (supports both image URL & file upload)
 const addExercise = async (req, res) => {
-  const { name, category, level } = req.body;
-  const img = req.file ? `/images/exercise/${req.file.filename}` : req.body.imgUrl || ""; // Use uploaded file or URL
+  const { name, category, level, videoUrl } = req.body;
+  const img = req.file
+    ? `/images/exercise/${req.file.filename}`
+    : req.body.imgUrl || "";
 
   try {
-    const newExercise = new Exercise({ name, category, level, img });
+    const newExercise = new Exercise({ name, category, level, img, videoUrl });
     await newExercise.save();
     res.status(201).json(newExercise);
   } catch (error) {
@@ -40,7 +42,7 @@ const addExercise = async (req, res) => {
 // Update an exercise (supports both image URL & file upload)
 const updateExercise = async (req, res) => {
   const { id } = req.params;
-  const { name, category, level } = req.body;
+  const { name, category, level, videoUrl } = req.body;
   let imgPath = "";
 
   try {
@@ -50,20 +52,23 @@ const updateExercise = async (req, res) => {
     }
 
     if (req.file) {
-      // Delete old image if it exists
-      const oldImagePath = path.join(__dirname, "../images/exercise", path.basename(existingExercise.img));
+      const oldImagePath = path.join(
+        __dirname,
+        "../images/exercise",
+        path.basename(existingExercise.img)
+      );
       if (fs.existsSync(oldImagePath)) {
         fs.unlinkSync(oldImagePath);
       }
 
       imgPath = `/images/exercise/${req.file.filename}`;
     } else {
-      imgPath = req.body.imgUrl || existingExercise.img; // Keep old image if not updated
+      imgPath = req.body.imgUrl || existingExercise.img;
     }
 
     const updatedExercise = await Exercise.findByIdAndUpdate(
       id,
-      { name, category, level, img: imgPath },
+      { name, category, level, img: imgPath, videoUrl },
       { new: true }
     );
 
@@ -85,7 +90,11 @@ const deleteExercise = async (req, res) => {
 
     // Delete the image file if it exists
     if (deletedExercise.img && !deletedExercise.img.startsWith("http")) {
-      const imagePath = path.join(__dirname, "../images/exercise", path.basename(deletedExercise.img));
+      const imagePath = path.join(
+        __dirname,
+        "../images/exercise",
+        path.basename(deletedExercise.img)
+      );
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
       }

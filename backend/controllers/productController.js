@@ -18,6 +18,7 @@ const createProduct = async (req, res) => {
   const { name, brand, price, stock, product_type, description, image } =
     req.body;
 
+  // Check if all required fields are provided
   if (!name || !brand || !price || !stock || !product_type) {
     return res
       .status(400)

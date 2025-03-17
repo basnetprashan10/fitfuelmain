@@ -3,7 +3,8 @@ import "./viewcart.css";
 import AuthContext from "../../../context/SessionContext";
 import API_URL from "../../../config/apiconfig";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons"; // Import the trash icon
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import CartModal from "../../../components/dialogModal/cartModel"; // Import the CartModal component
 
 const ViewCart = () => {
   const { user } = useContext(AuthContext);
@@ -11,7 +12,7 @@ const ViewCart = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [previousOrders, setPreviousOrders] = useState([]);
 
-  const shippingFee = 5.0; // Fixed shipping fee for example
+  const shippingFee = 5.0;
   const [shippingAddress, setShippingAddress] = useState({
     street: "",
     city: "",
@@ -25,9 +26,79 @@ const ViewCart = () => {
     cvv: "",
   });
 
+  const [modal, setModal] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: null,
+    confirmText: "",
+    cancelText: "",
+  });
+
+  const showConfirmationModal = (
+    title,
+    message,
+    onConfirm,
+    confirmText,
+    cancelText
+  ) => {
+    setModal({
+      isOpen: true,
+      title,
+      message,
+      onConfirm,
+      confirmText,
+      cancelText,
+    });
+  };
+
+  const showErrorModal = (message) => {
+    setModal({
+      isOpen: true,
+      title: "Error",
+      message,
+      onConfirm: null,
+      confirmText: "",
+      cancelText: "Ok",
+    });
+  };
+
+  const showSuccessModal = (message) => {
+    setModal({
+      isOpen: true,
+      title: "Success",
+      message,
+      onConfirm: null,
+      confirmText: "",
+      cancelText: "Ok",
+    });
+  };
+
+  const showValidationModal = (message) => {
+    setModal({
+      isOpen: true,
+      title: "Error",
+      message,
+      onConfirm: null,
+      confirmText: "",
+      cancelText: "Ok",
+    });
+  };
+
+  const closeModal = () => {
+    setModal({
+      isOpen: false,
+      title: "",
+      message: "",
+      onConfirm: null,
+      confirmText: "",
+      cancelText: "",
+    });
+  };
+
   useEffect(() => {
     const fetchCartItems = async () => {
-      if (!user) return; // Don't fetch if not logged in
+      if (!user) return;
       try {
         const response = await fetch(`${API_URL}/api/cart/${user.id}`);
         if (response.ok) {
@@ -61,72 +132,145 @@ const ViewCart = () => {
           : item
       );
 
-      // Calculate total based on updated state
       calculateTotal(updatedItems);
       return updatedItems;
     });
   };
+
   const handleDeleteItem = async (item) => {
-    if (!user) return; // Don't delete if not logged in
-    try {
-      const response = await fetch(`${API_URL}/api/cart/remove`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: user.id,
-          productId: item.productId._id,
-        }),
-      });
+    if (!user) return;
 
-      if (response.ok) {
-        setCartItems((prevItems) => {
-          const updatedItems = prevItems.filter(
-            (cartItem) => cartItem._id !== item._id
-          );
+    showConfirmationModal(
+      "Delete Item",
+      "Are you sure you want to delete this item?",
+      async () => {
+        try {
+          const response = await fetch(`${API_URL}/api/cart/remove`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: user.id,
+              productId: item.productId._id,
+            }),
+          });
 
-          // Calculate total based on updated state
-          calculateTotal(updatedItems);
-
-          // Clear the cart if it is empty
-          if (updatedItems.length === 0) {
-            clearCart(user.id); // Call clear cart function
+          if (response.ok) {
+            setCartItems((prevItems) =>
+              prevItems.filter((cartItem) => cartItem._id !== item._id)
+            );
+            calculateTotal(cartItems);
+            showSuccessModal("Item deleted successfully!");
+          } else {
+            console.error("Error deleting item:", response.status);
+            showErrorModal("Error deleting item, please try again.");
           }
-
-          return updatedItems;
-        });
-      } else {
-        console.error("Error deleting item:", response.status);
-        alert("Error deleting item, please try again.");
-      }
-    } catch (error) {
-      console.error("Delete error:", error);
-      alert("Delete error, please try again.");
-    }
+        } catch (error) {
+          console.error("Delete error:", error);
+          showErrorModal("Delete error, please try again.");
+        }
+      },
+      "Delete",
+      "Cancel"
+    );
   };
 
-  const clearCart = async (userId) => {
-    try {
-      const response = await fetch(`${API_URL}/api/cart/clear`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId }),
-      });
+  const handleEsewaPayment = async () => {
+    const transaction_uuid = `txn_${Date.now()}`; // Generate a unique transaction ID
+    const total_amount = totalPrice + shippingFee;
 
-      if (!response.ok) {
-        console.error("Error clearing cart:", response.status);
-        alert("Error clearing cart, please try again.");
-      }
-    } catch (error) {
-      console.error("Clear cart error:", error);
-      alert("Clear cart error, please try again.");
-    }
+    // Save order details in local storage
+    const orderDetails = {
+      userId: user.id,
+      cartItems: cartItems.map((item) => ({
+        productId: item.productId._id,
+        quantity: item.quantity,
+      })),
+      shippingAddress,
+      totalPrice: total_amount,
+    };
+    localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+
+    // Prepare eSewa payment parameters
+    const paymentParams = {
+      amount: totalPrice,
+      tax_amount: 0,
+      product_service_charge: 0,
+      product_delivery_charge: shippingFee,
+      product_code: "EPAYTEST",
+      total_amount: total_amount,
+      transaction_uuid: transaction_uuid,
+      success_url: `${window.location.origin}/success`, 
+      failure_url: `${window.location.origin}/failure`,
+      signed_field_names: "total_amount,transaction_uuid,product_code",
+      signature: "", // Generate signature as before
+    };
+
+    // Generate signature and submit the form as before
+    const secretKey = "8gBm/:&EnhH.1/q";
+    const signatureData = `total_amount=${paymentParams.total_amount},transaction_uuid=${paymentParams.transaction_uuid},product_code=${paymentParams.product_code}`;
+    const signature = await generateSignature(signatureData, secretKey);
+    paymentParams.signature = signature;
+
+    // Redirect to eSewa payment page
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "https://rc.esewa.com.np/api/epay/main/v2/form";
+
+    Object.keys(paymentParams).forEach((key) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = paymentParams[key];
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
+  };
+
+  const generateSignature = async (data, secretKey) => {
+    const encoder = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+      "raw",
+      encoder.encode(secretKey),
+      { name: "HMAC", hash: "SHA-256" },
+      false,
+      ["sign"]
+    );
+    const signature = await crypto.subtle.sign(
+      "HMAC",
+      key,
+      encoder.encode(data)
+    );
+    return btoa(String.fromCharCode(...new Uint8Array(signature)));
   };
 
   const handleCheckout = async () => {
+    if (
+      !shippingAddress.street ||
+      !shippingAddress.city ||
+      !shippingAddress.state ||
+      !shippingAddress.zip
+    ) {
+      showValidationModal("Please fill in all shipping address fields.");
+      return;
+    }
+
+    if (paymentMode === "esewa") {
+      handleEsewaPayment();
+      return;
+    }
+
+    if (
+      paymentMode === "card" &&
+      (!cardDetails.cardNumber || !cardDetails.expiryDate || !cardDetails.cvv)
+    ) {
+      showValidationModal("Please fill in all card details.");
+      return;
+    }
+
     try {
       const response = await fetch(`${API_URL}/api/orders`, {
         method: "POST",
@@ -147,29 +291,31 @@ const ViewCart = () => {
 
       if (response.ok) {
         const data = await response.json();
-        alert(
+        showSuccessModal(
           `Order placed successfully! Your order number is: ${data.order.orderNumber}`
         );
-        // Refresh the page to clear the cart and update any data
-        window.location.reload();
+
+        // Clear the cart state without refreshing the page
+        setCartItems([]);
+        setTotalPrice(0);
       } else {
         console.error("Error placing order:", response.status);
-        alert("Error placing order, please try again.");
+        showErrorModal("Error placing order, please try again.");
       }
     } catch (error) {
       console.error("Checkout error:", error);
-      alert("Checkout error, please try again.");
+      showErrorModal("Checkout error, please try again.");
     }
   };
 
   useEffect(() => {
     const fetchPreviousOrders = async () => {
-      if (!user) return; // Don't fetch if not logged in
+      if (!user) return;
       try {
         const response = await fetch(`${API_URL}/api/orders/${user.id}`);
         if (response.ok) {
           const data = await response.json();
-          setPreviousOrders(data); // Set the fetched orders
+          setPreviousOrders(data);
         } else {
           console.error("Error fetching previous orders:", response.status);
         }
@@ -215,13 +361,13 @@ const ViewCart = () => {
                   </div>
                   <div className="item-subtotal">
                     <p>
-                      Subtotal: Rs 
+                      Subtotal: Rs
                       {(item.productId.price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                   <button
                     className="delete-button"
-                    onClick={() => handleDeleteItem(item)} // Pass the entire item object
+                    onClick={() => handleDeleteItem(item)}
                   >
                     <FontAwesomeIcon icon={faTrash} />
                   </button>
@@ -265,7 +411,7 @@ const ViewCart = () => {
               />
               <input
                 type="text"
-                placeholder="Provience"
+                placeholder="State"
                 value={shippingAddress.state}
                 onChange={(e) =>
                   setShippingAddress({
@@ -294,7 +440,9 @@ const ViewCart = () => {
               >
                 <option value="cash">Cash</option>
                 <option value="card">Card</option>
+                <option value="esewa">eSewa</option>
               </select>
+
               {paymentMode === "card" && (
                 <div className="card-details">
                   <input
@@ -363,6 +511,15 @@ const ViewCart = () => {
           </div>
         )}
       </div>
+      <CartModal
+        isOpen={modal.isOpen}
+        onClose={closeModal}
+        onConfirm={modal.onConfirm}
+        title={modal.title}
+        message={modal.message}
+        confirmText={modal.confirmText}
+        cancelText={modal.cancelText}
+      />
     </div>
   );
 };

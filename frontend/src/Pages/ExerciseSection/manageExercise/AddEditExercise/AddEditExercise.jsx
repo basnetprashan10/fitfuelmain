@@ -17,6 +17,7 @@ const AddEditExercise = () => {
     level: exercise ? exercise.level : "",
     imgUrl: exercise ? exercise.img : "",
     imgFile: null,
+    videoUrl: exercise ? exercise.videoUrl : "", // Add the video URL to the form data
   });
 
   const [categories, setCategories] = useState([]);
@@ -41,10 +42,9 @@ const AddEditExercise = () => {
         name: exercise.name,
         category: exercise.category,
         level: exercise.level,
-        imgUrl: exercise.img.startsWith("http://localhost:5000")
-          ? ""
-          : exercise.img,
+        imgUrl: exercise.img.startsWith(`${API_URL}`) ? "" : exercise.img,
         imgFile: null,
+        videoUrl: exercise.videoUrl || "", // Populate videoUrl if exercise exists
       });
     }
   }, [exercise]);
@@ -62,6 +62,7 @@ const AddEditExercise = () => {
     setIsModalOpen(false);
     navigate("/manageExercise");
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -79,6 +80,7 @@ const AddEditExercise = () => {
         name: formData.name,
         category: formData.category.toLowerCase(), // Convert category to lowercase
         level: formData.level,
+        videoUrl: formData.videoUrl, // Include video URL in the payload
       };
 
       if (isUsingFile) {
@@ -86,6 +88,7 @@ const AddEditExercise = () => {
         formPayload.append("name", payload.name);
         formPayload.append("category", payload.category);
         formPayload.append("level", payload.level);
+        formPayload.append("videoUrl", payload.videoUrl); // Include video URL
         formPayload.append("img", formData.imgFile);
 
         response = await axios({
@@ -191,6 +194,17 @@ const AddEditExercise = () => {
             name="imgFile"
             accept="image/*"
             onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="videoUrl">Video URL</label>
+          <input
+            type="text"
+            id="videoUrl"
+            name="videoUrl"
+            value={formData.videoUrl}
+            onChange={handleChange}
+            placeholder="Enter video URL"
           />
         </div>
         <p className="image-note">

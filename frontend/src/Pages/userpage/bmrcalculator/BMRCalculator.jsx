@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalculator } from "@fortawesome/free-solid-svg-icons";
 import "./BMRCalculator.css";
+import Modal from "../../../components/dialogModal/Modal3";
 
 const BMRCalculator = ({ setBmr }) => {
   const [gender, setGender] = useState("male");
@@ -9,10 +10,14 @@ const BMRCalculator = ({ setBmr }) => {
   const [height, setHeight] = useState("");
   const [age, setAge] = useState("");
   const [bmr, setBmrState] = useState(null);
+  const [error, setError] = useState(""); // State to hold error message
+  const [showModal, setShowModal] = useState(false); // State to toggle modal visibility
 
+  // Function to calculate BMR
   const calculateBMR = () => {
     if (!weight || !height || !age) {
-      alert("Please fill all fields!");
+      setError("Please fill all fields!"); // Set the error message
+      setShowModal(true); // Show the modal
       return;
     }
 
@@ -23,6 +28,11 @@ const BMRCalculator = ({ setBmr }) => {
 
     setBmrState(calculatedBMR.toFixed(2));
     setBmr(calculatedBMR.toFixed(2)); // Update parent state with BMR
+  };
+
+  // Function to close modal
+  const closeModal = () => {
+    setShowModal(false); // Close the modal
   };
 
   return (
@@ -81,6 +91,9 @@ const BMRCalculator = ({ setBmr }) => {
           <p>🔥 This is the number of calories your body burns at rest.</p>
         </div>
       )}
+
+      {/* Show error modal if there is an error */}
+      {showModal && <Modal message={error} onClose={closeModal} />}
     </div>
   );
 };
@@ -146,7 +159,6 @@ const DailyCalories = ({ bmr }) => {
   );
 };
 
-
 const BMRCalculatorPage = () => {
   const [bmr, setBmr] = useState(null);
 
@@ -154,7 +166,6 @@ const BMRCalculatorPage = () => {
     <div className="bmrpage-container">
       <div className="bmr-calculator-section">
         <BMRCalculator setBmr={setBmr} />
-        {/* Render DailyCalories always, but BMR-dependent values will show after calculation */}
         <DailyCalories bmr={bmr} />
       </div>
     </div>

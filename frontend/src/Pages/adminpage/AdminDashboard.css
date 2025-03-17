@@ -53,7 +53,7 @@
 
 @media screen and (max-width: 768px) {
   .admin-container {
-    margin-left: 200px;
+    margin-left: 230px;
   }
   .card {
     
@@ -82,7 +82,7 @@
 
 @media screen and (max-width: 480px) {
   .admin-container {
-    margin-left: 110px;
+    margin-left: 125px;
     
   }
   .dashboard {

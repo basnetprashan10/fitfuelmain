@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// ExerciseCategory schema definition
 const ExerciseCategorySchema = new mongoose.Schema({
   name: {
     type: String,
@@ -11,4 +12,5 @@ const ExerciseCategorySchema = new mongoose.Schema({
   },
 });
 
+// Export the model
 module.exports = mongoose.model("ExerciseCategory", ExerciseCategorySchema);

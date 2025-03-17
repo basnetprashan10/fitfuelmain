@@ -4,25 +4,28 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const path = require("path");
 
-dotenv.config();
-connectDB();
+dotenv.config(); // Load environment variables from .env file
+connectDB(); // Connect to the database
 
 const app = express();
 
 // Middleware
-app.use(express.json());
-app.use(cors());
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use(express.json()); // Parse incoming JSON requests
+app.use(cors()); // Enable CORS
+app.use("/images", express.static(path.join(__dirname, "images"))); // Serve static images from the 'images' directory
 
-// Routes
+// Routess
 app.use("/api/signup", require("./routes/signUpRoute"));
 app.use("/api/login", require("./routes/loginRoute"));
 app.use("/api/dashboard", require("./routes/loginRoute"));
 app.use("/api/products", require("./routes/productRoute"));
 app.use("/api/cart", require("./routes/cartRoute"));
 app.use("/api/exercisecategory", require("./routes/exerciseCatRoutes"));
-app.use('/api/exercises', require("./routes/exerciseRoutes"));
-app.use('/api/orders', require("./routes/orderRoutes"));
+app.use("/api/exercises", require("./routes/exerciseRoutes"));
+app.use("/api/orders", require("./routes/orderRoutes"));
+app.use("/api/hire-trainer", require("./routes/hireTrainerRoutes"));
+app.use("/api/food", require("./routes/foodRoutes"));
+app.use("/api/foodlog", require("./routes/foodLogRoute"));
 
 // Fallback for undefined routes
 app.use((req, res) => {
@@ -31,7 +34,7 @@ app.use((req, res) => {
 
 // Global error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(err.stack); // Log error details
   res.status(500).json({ message: "An internal server error occurred" });
 });
 

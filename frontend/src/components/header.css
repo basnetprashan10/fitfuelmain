@@ -1,5 +1,5 @@
-/* Default styles for larger screens */
-header {
+/* Header Styles */
+.header {
   width: 100%;
   padding: 0 20px;
   background: rgba(0, 0, 0, 0.91);
@@ -14,6 +14,7 @@ header {
   height: 120px;
 }
 
+/* Header Content Container */
 .header-content {
   display: flex;
   justify-content: space-between;
@@ -21,133 +22,150 @@ header {
   width: 100%;
 }
 
-.logo-containerr,
-.title-container,
-.user-profile {
-  flex: 1;
+/* Logo Container */
+.header-logo-container,
+.header-title-container,
+.header-user-profile {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.logo-containerr {
-  justify-content: flex-start;
-}
-
-.logo {
+/* Logo Styles */
+.header-logo {
   width: 100px;
   height: auto;
   margin-left: 100px;
 }
 
-.title-container {
+/* Title Container */
+.header-title-container {
   flex-direction: column;
   text-align: center;
   padding-bottom: 50px;
   margin-top: 50px;
 }
 
-h1 {
+/* Header Title */
+.header-title {
   margin: 0;
   font-size: 24px;
   color: #ffffff;
 }
 
-.slogan {
+/* Slogan Text */
+.header-slogan {
   font-size: 18px;
   color: #888;
 }
 
-.user-profile-contaainer {
+/* User Profile Container */
+.header-user-profile-container {
   text-align: center;
-  margin-left: 150px;
+  margin-right: 150px;
 }
 
-.user-icon {
+/* User Icon */
+.header-user-icon {
   font-size: 60px;
   color: #ffffff;
   cursor: pointer;
 }
 
-.username {
+/* Username */
+.header-username {
   font-size: 14px;
   color: #fff;
   margin-top: 5px;
+  text-align: center;
 }
 
-/* Responsive styles for smaller screens */
+/* Responsive Styles for Smaller Screens */
 @media (max-width: 768px) {
-  header {
-    height: 100px; /* Reduce height */
-    padding: 0 10px; /* Adjust padding */
+  /* Header Adjustments for Small Screens */
+  .header {
+    height: 100px;
+    padding: 0 10px;
   }
 
-  .logo {
-    width: 80px; /* Reduce logo size */
-    margin-left: 50px; /* Adjust margin */
+  /* Logo Adjustments for Small Screens */
+  .header-logo {
+    width: 80px;
+    margin-left: 50px;
   }
 
-  .title-container {
-    flex-direction: column;
-    text-align: center;
+  /* Title Container Adjustments for Small Screens */
+  .header-title-container {
     padding-bottom: 30px;
     margin-top: 30px;
   }
 
-  h1 {
-    font-size: 20px; /* Reduce font size */
+  /* Header Title Adjustments */
+  .header-title {
+    font-size: 20px;
   }
 
-  .slogan {
-    font-size: 14px; /* Reduce slogan font size */
+  /* Slogan Text Adjustments */
+  .header-slogan {
+    font-size: 14px;
   }
 
-  .user-profile-contaainer {
-    margin-left: 30px; /* Adjust margin */
+  /* User Profile Container Adjustments */
+  .header-user-profile-container {
+    margin-right: 30px;
   }
 
-  .user-icon {
-    font-size: 50px; /* Reduce icon size */
+  /* User Icon Adjustments */
+  .header-user-icon {
+    font-size: 50px;
   }
 
-  .username {
-    font-size: 12px; /* Reduce username font size */
+  /* Username Adjustments */
+  .header-username {
+    font-size: 12px;
   }
 }
 
 @media (max-width: 480px) {
-  header {
-    height: 80px; /* Further reduce height */
-    position: fixed;
+  /* Header Adjustments for Even Smaller Screens */
+  .header {
+    height: 80px;
   }
 
-  .logo {
-    width: 60px; /* Smaller logo size */
-    margin-left: 20px; /* Adjust margin */
+  /* Logo Adjustments for Even Smaller Screens */
+  .header-logo {
+    width: 60px;
+    margin-left: 20px;
   }
 
-  .title-container {
+  /* Title Container Adjustments for Even Smaller Screens */
+  .header-title-container {
     padding-bottom: 10px;
     margin-top: 10px;
   }
 
-  h1 {
-    font-size: 18px; /* Further reduce font size */
+  /* Header Title Adjustments */
+  .header-title {
+    font-size: 18px;
   }
 
-  .slogan {
-    font-size: 12px; /* Further reduce slogan font size */
+  /* Slogan Text Adjustments */
+  .header-slogan {
+    font-size: 12px;
   }
 
-  .user-profile-contaainer {
+  /* User Profile Container Adjustments */
+  .header-user-profile-container {
     margin-left: 15px;
   }
 
-  .user-icon {
-    font-size: 40px; /* Smaller user icon */
+  /* User Icon Adjustments */
+  .header-user-icon {
+    font-size: 40px;
   }
 
-  .username {
-    font-size: 10px; /* Smaller username font size */
+  /* Username Adjustments */
+  .header-username {
+    font-size: 10px;
   }
 }

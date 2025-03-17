@@ -2,28 +2,33 @@ const Cart = require("../models/cartModel");
 const Product = require("../models/ProductModel");
 
 // Add product to cart
-exports.addToCart = async (req, res) => {
+const addToCart = async (req, res) => {
   const { userId, productId, quantity } = req.body;
+
+  // Ensure required fields are provided
   if (!userId || !productId) {
     return res
       .status(400)
       .json({ message: "userId and productId is required" });
   }
+
   try {
+    // Check if the user already has a cart
     let cart = await Cart.findOne({ userId });
 
     if (!cart) {
-      cart = new Cart({ userId, items: [] });
+      cart = new Cart({ userId, items: [] }); // Create a new cart if it doesn't exist
     }
 
+    // Check if the product already exists in the cart
     const existingItem = cart.items.find(
       (item) => item.productId.toString() === productId
     );
 
     if (existingItem) {
-      existingItem.quantity += quantity || 1;
+      existingItem.quantity += quantity || 1; // Update quantity if the item is already in the cart
     } else {
-      cart.items.push({ productId, quantity: quantity || 1 });
+      cart.items.push({ productId, quantity: quantity || 1 }); // Add new item if it's not in the cart
     }
 
     await cart.save();
@@ -35,11 +40,13 @@ exports.addToCart = async (req, res) => {
 };
 
 // Get user's cart
-exports.getCart = async (req, res) => {
+const getCart = async (req, res) => {
   const { userId } = req.params;
 
   try {
+    // Find the user's cart and populate product details
     const cart = await Cart.findOne({ userId }).populate("items.productId");
+
     if (!cart) return res.status(404).json({ message: "Cart is empty" });
 
     res.status(200).json(cart);
@@ -50,7 +57,7 @@ exports.getCart = async (req, res) => {
 };
 
 // Update cart item quantity
-exports.updateCartItem = async (req, res) => {
+const updateCartItem = async (req, res) => {
   const { userId, productId, quantity } = req.body;
 
   try {
@@ -58,6 +65,7 @@ exports.updateCartItem = async (req, res) => {
 
     if (!cart) return res.status(404).json({ message: "Cart not found" });
 
+    // Find the item in the cart and update its quantity
     const item = cart.items.find(
       (item) => item.productId.toString() === productId
     );
@@ -76,7 +84,7 @@ exports.updateCartItem = async (req, res) => {
 };
 
 // Remove item from cart
-exports.removeFromCart = async (req, res) => {
+const removeFromCart = async (req, res) => {
   const { userId, productId } = req.body;
 
   try {
@@ -84,6 +92,7 @@ exports.removeFromCart = async (req, res) => {
 
     if (!cart) return res.status(404).json({ message: "Cart not found" });
 
+    // Filter out the product from the cart items
     cart.items = cart.items.filter(
       (item) => item.productId.toString() !== productId
     );
@@ -97,7 +106,7 @@ exports.removeFromCart = async (req, res) => {
 };
 
 // Clear entire cart
-exports.clearCart = async (req, res) => {
+const clearCart = async (req, res) => {
   const { userId } = req.body;
 
   try {
@@ -105,7 +114,7 @@ exports.clearCart = async (req, res) => {
 
     if (!cart) return res.status(404).json({ message: "Cart not found" });
 
-    cart.items = [];
+    cart.items = []; // Clear all items from the cart
     await cart.save();
 
     res.status(200).json({ message: "Cart cleared", cart });
@@ -113,4 +122,12 @@ exports.clearCart = async (req, res) => {
     console.error("Clear cart error:", error);
     res.status(500).json({ error: "Failed to clear cart" });
   }
+};
+
+module.exports = {
+  getCart,
+  addToCart,
+  clearCart,
+  removeFromCart,
+  updateCartItem,
 };

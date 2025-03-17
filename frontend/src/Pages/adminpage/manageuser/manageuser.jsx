@@ -1,32 +1,34 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./managerusers.css";
 import SlideMenu from "../../../components/slidemenu";
-import { useNavigate } from "react-router-dom";
 import API_URL from "../../../config/apiconfig";
-import Modal from "../../../components/dialogModal/Modal"; // Import the modal component
+// Import the modal component for confirmation and success messages
+import Modal from "../../../components/dialogModal/Modal";
 
 const ManageUsers = () => {
+  // State to store users, filter, search input, and modal states
   const [users, setUsers] = useState([]);
   const [filter, setFilter] = useState("");
   const [search, setSearch] = useState("");
-
   const [modalOpen, setModalOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const navigate = useNavigate();
 
+  // Fetch users from API on component mount
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/signup/getuser`);
+        const response = await fetch(`${API_URL}/api/signup/getalluser`);
         const data = await response.json();
 
         if (data.message === "success") {
           const formattedUsers = data.data.map((user) => ({
             ...user,
-            type: user.user_type || "User",
+            type: user.user_type || "User", // Set default type as 'User' if not provided
           }));
-          setUsers(formattedUsers);
+          setUsers(formattedUsers); // Update users state with the fetched data
         }
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -36,10 +38,13 @@ const ManageUsers = () => {
     fetchUsers();
   }, []);
 
+  // Opens the confirmation modal for deleting a user
   const confirmDeleteUser = (id) => {
-    setSelectedUserId(id);
-    setModalOpen(true);
+    setSelectedUserId(id); // Set the selected user ID to delete
+    setModalOpen(true); // Open the confirmation modal
   };
+
+  // Filters users by type and search query
   const groupUserByType = (userType) => {
     if (!Array.isArray(users)) {
       console.error("Users is not an array:", users);
@@ -55,15 +60,16 @@ const ManageUsers = () => {
       );
   };
 
+  // Delete user from the database
   const deleteUser = async () => {
-    setModalOpen(false);
+    setModalOpen(false); // Close modal after deletion attempt
     if (!selectedUserId) return;
 
     try {
       const response = await fetch(
         `${API_URL}/api/signup/deleteuser/${selectedUserId}`,
         {
-          method: "DELETE",
+          method: "DELETE", // Make DELETE request to remove user
         }
       );
 
@@ -71,11 +77,11 @@ const ManageUsers = () => {
         setUsers((prevUsers) =>
           prevUsers.filter((user) => user._id !== selectedUserId)
         );
-        setSuccessOpen(true);
+        setSuccessOpen(true); // Open success modal if deletion is successful
       } else if (response.status === 404) {
-        alert("User not found.");
+        alert("User not found."); // Alert if user is not found
       } else {
-        alert("Failed to delete user.");
+        alert("Failed to delete user."); // Alert if deletion fails
       }
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -96,7 +102,7 @@ const ManageUsers = () => {
             <select
               className="filter-opt"
               value={filter}
-              onChange={(e) => setFilter(e.target.value)}
+              onChange={(e) => setFilter(e.target.value)} // Handle filter change
             >
               <option value="">All</option>
               <option value="User">User</option>
@@ -107,7 +113,7 @@ const ManageUsers = () => {
               type="text"
               placeholder="Search by username"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)} // Handle search input change
               className="search-input"
             />
           </div>
@@ -115,7 +121,7 @@ const ManageUsers = () => {
 
         <div className="users-list">
           {groupUserByType(filter).length === 0 ? (
-            <p>No user found.</p>
+            <p>No user found.</p> // Display message if no users match the filter
           ) : (
             <table>
               <thead>
@@ -149,7 +155,7 @@ const ManageUsers = () => {
                       </button>
                       <button
                         className="delete-button"
-                        onClick={() => confirmDeleteUser(user._id)}
+                        onClick={() => confirmDeleteUser(user._id)} // Handle user deletion
                       >
                         Delete
                       </button>
@@ -166,7 +172,7 @@ const ManageUsers = () => {
       <Modal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        onConfirm={deleteUser}
+        onConfirm={deleteUser} // Confirm deletion action
         title="Confirm Deletion"
         message="Are you sure you want to delete this user?"
         confirmText="Delete"
@@ -176,7 +182,7 @@ const ManageUsers = () => {
       {/* Success Message Modal */}
       <Modal
         isOpen={successOpen}
-        onClose={() => setSuccessOpen(false)}
+        onClose={() => setSuccessOpen(false)} // Close success modal
         title="Success"
         message="User deleted successfully."
         confirmText="OK"

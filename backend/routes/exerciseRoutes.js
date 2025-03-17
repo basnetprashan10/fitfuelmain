@@ -6,7 +6,8 @@ const path = require("path");
 // Configure multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../images/exercise")); // Save to /images/exercise/ path
+    // Save to /images/exercise/ path
+    cb(null, path.join(__dirname, "../images/exercise"));
   },
   filename: (req, file, cb) => {
     // Use original name and append date to avoid duplicates

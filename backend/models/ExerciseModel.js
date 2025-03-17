@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Exercise schema definition
 const exerciseSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -16,7 +17,12 @@ const exerciseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  videoUrl: {
+    // New field for video URL
+    type: String,
+    default: "",
+  },
 });
 
-const Exercise = mongoose.model("Exercise", exerciseSchema);
-module.exports = Exercise;
+// Export the Exercise model
+module.exports = mongoose.model("Exercise", exerciseSchema);

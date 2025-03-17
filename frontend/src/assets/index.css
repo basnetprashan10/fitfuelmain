@@ -1,10 +1,10 @@
+/* Golobal Style*/
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Fixing body styles from index.css */
 body {
   background: linear-gradient(90deg, #0a0a0a 70%, #02028b 100%);
   color: white;

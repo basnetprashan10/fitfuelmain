@@ -55,7 +55,7 @@
 
 /* Floating Button for Mobile */
 .nav-toggle-btn {
-  display: none; /* Hidden by default */
+  display: none;
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -80,15 +80,16 @@
     display: block;
   }
 }
+
 /* Spacing between icons and text */
 .nav-popup li,
 .dashboard-nav li {
   display: flex;
   align-items: center;
-  gap: 15px; /* Increased space */
+  gap: 15px;
 }
+
 /* Pop-up Modal Styling */
-/* Slide-in effect for popup */
 .nav-popup {
   position: fixed;
   bottom: 0;
@@ -105,13 +106,15 @@
   box-shadow: 0 -4px 10px rgba(153, 25, 25, 0.5);
   transition: left 0.3s ease-in-out;
 }
+
 .nav-popup.active {
   left: 0;
 }
+
 /* Show Pop-up on Small Screens when Active */
 @media (max-width: 768px) {
   .nav-popup.active {
-    display: flex; /* Show when toggled */
+    display: flex; 
   }
 }
 
@@ -158,4 +161,52 @@
   color: white;
   font-size: 24px;
   cursor: pointer;
+}
+
+/* Settings Popup */
+.settings-popup {
+  position: fixed;
+  bottom: 0;
+  right: -100%;
+  margin-bottom: 70px; 
+  width: 250px; 
+  height: auto; 
+  background-color: rgba(29, 28, 36, 0.95);
+  border-radius: 10px 0 0 10px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 1001;
+  box-shadow: -4px 0 10px rgba(153, 25, 25, 0.5); 
+  transition: right 0.3s ease-in-out; 
+}
+
+.settings-popup.active {
+  right: 0; 
+}
+
+.settings-popup-content {
+  text-align: center;
+  width: 100%;
+  padding-top: 20px; 
+}
+
+.settings-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%; 
+}
+
+.settings-popup li {
+  padding: 15px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  text-align: center; 
+}
+
+.settings-popup li:hover {
+  background-color: #333;
 }

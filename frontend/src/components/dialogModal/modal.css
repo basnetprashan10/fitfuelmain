@@ -1,3 +1,4 @@
+/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -11,6 +12,7 @@
   z-index: 1000;
 }
 
+/* Modal Content */
 .modal-content {
   background: rgba(14, 13, 13, 0.822);
   padding: 20px;
@@ -19,6 +21,7 @@
   min-width: 300px;
 }
 
+/* Modal Actions */
 .modal-actions {
   display: flex;
   justify-content: center;
@@ -26,6 +29,7 @@
   gap: 10px;
 }
 
+/* Confirm Button */
 .confirm-btn {
   background-color: #dc3545;
   color: white;
@@ -35,6 +39,11 @@
   border-radius: 5px;
 }
 
+.confirm-btn:hover {
+  background-color: #c82333;
+}
+
+/* Cancel Button */
 .cancel-btn {
   background-color: #28a745;
   color: white;
@@ -42,10 +51,6 @@
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
-}
-
-.confirm-btn:hover {
-  background-color: #c82333;
 }
 
 .cancel-btn:hover {

@@ -1,31 +1,33 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import API_URL from "../../../config/apiconfig";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import "./exercise.css";
+import API_URL from "../../../config/apiconfig";
 
 const Exercises = () => {
-  const [categories, setCategories] = useState([]);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [categories, setCategories] = useState([]); // State to hold exercise categories
+  const navigate = useNavigate(); // Initialize useNavigate for redirection
 
   useEffect(() => {
+    // Function to fetch categories from API
     const fetchCategories = async () => {
       try {
+        // Fetch categories from API
         const response = await axios.get(`${API_URL}/api/exercisecategory`);
         const updatedCategories = response.data.map((category) => ({
           ...category,
-          img: `${API_URL}${category.img}`,
+          img: `${API_URL}${category.img}`, // Update image URL
         }));
-        setCategories(updatedCategories);
+        setCategories(updatedCategories); // Set fetched categories to state
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error("Error fetching categories:", error); // Log error if fetching fails
       }
     };
-    fetchCategories();
+    fetchCategories(); // Call the function to fetch categories
   }, []);
 
   const handleBoxClick = (category) => {
-    // Use navigate to redirect to the exercise detail page
+    // Handle category click to navigate to the exercises page of that category
     navigate(`/exercises/${category.name}`);
   };
 

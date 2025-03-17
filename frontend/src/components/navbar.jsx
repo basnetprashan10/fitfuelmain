@@ -1,29 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
+import { useNavigate } from "react-router-dom";
 import {
   faTachometerAlt,
   faBullseye,
   faUtensils,
-  faCogs,
   faShoppingCart,
   faChalkboardTeacher,
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import "./navbar.css";
+import AuthContext from "../context/SessionContext";
 
 const Navbar = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
   };
 
-  // Function to handle navigation
+  const toggleSettingsPopup = () => {
+    setIsSettingsOpen(!isSettingsOpen);
+    if (isPopupOpen) {
+      togglePopup(); // Close the main popup if it's open
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear token from local storage
+    setUser(null); // Clear user context
+    navigate("/userlogin"); // Redirect to login page
+  };
+
   const handleNavigation = (path) => {
-    navigate(path); // Use navigate instead of history.push
+    navigate(path);
     if (isPopupOpen) {
       togglePopup(); // Close the popup if it is open
     }
@@ -58,13 +72,31 @@ const Navbar = () => {
             <FontAwesomeIcon icon={faUtensils} className="nav-icon" />
             <span>Kitchen</span>
           </li>
-          <li onClick={() => handleNavigation("/hire-trainer")}>
-            <FontAwesomeIcon icon={faChalkboardTeacher} className="nav-icon" />
-            <span>Hire Trainer</span>
-          </li>
-          <li onClick={() => handleNavigation("/settings")}>
-            <FontAwesomeIcon icon={faCogs} className="nav-icon" />
-            <span>Settings</span>
+
+          {/* Conditionally Render Hire Request link */}
+          {user?.user_type !== "User" && (
+            <li onClick={() => handleNavigation("/hirerequest")}>
+              <FontAwesomeIcon
+                icon={faChalkboardTeacher}
+                className="nav-icon"
+              />
+              <span>Hire Request</span>
+            </li>
+          )}
+
+          {/* Conditionally Render Hire Trainer link */}
+          {user?.user_type !== "Trainer" && (
+            <li onClick={() => handleNavigation("/hire-trainer")}>
+              <FontAwesomeIcon
+                icon={faChalkboardTeacher}
+                className="nav-icon"
+              />
+              <span>Hire Trainer</span>
+            </li>
+          )}
+
+          <li onClick={toggleSettingsPopup}>
+            <FontAwesomeIcon icon={faBars} className="nav-icon" />
           </li>
         </ul>
       </nav>
@@ -95,17 +127,49 @@ const Navbar = () => {
               <FontAwesomeIcon icon={faUtensils} className="nav-icon" />
               <span>Kitchen</span>
             </li>
-            <li onClick={() => handleNavigation("/hire-trainer")}>
-              <FontAwesomeIcon
-                icon={faChalkboardTeacher}
-                className="nav-icon"
-              />
-              <span>Hire Trainer</span>
-            </li>
-            <li onClick={() => handleNavigation("/settings")}>
-              <FontAwesomeIcon icon={faCogs} className="nav-icon" />
+
+            {/* Conditionally Render Hire Request link */}
+            {user?.user_type !== "User" && (
+              <li onClick={() => handleNavigation("/hirerequest")}>
+                <FontAwesomeIcon
+                  icon={faChalkboardTeacher}
+                  className="nav-icon"
+                />
+                <span>Hire Request</span>
+              </li>
+            )}
+
+            {/* Conditionally Render Hire Trainer link */}
+            {user?.user_type !== "Trainer" && (
+              <li onClick={() => handleNavigation("/hire-trainer")}>
+                <FontAwesomeIcon
+                  icon={faChalkboardTeacher}
+                  className="nav-icon"
+                />
+                <span>Hire Trainer</span>
+              </li>
+            )}
+
+            <li onClick={toggleSettingsPopup}>
+              <FontAwesomeIcon icon={faBars} className="nav-icon" />
               <span>Settings</span>
             </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Settings Popup */}
+      <div className={`settings-popup ${isSettingsOpen ? "active" : ""}`}>
+        <div className="settings-popup-content">
+          <button className="close-popup" onClick={toggleSettingsPopup}>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+          <h3>Settings</h3>
+          <ul>
+            <li onClick={() => handleNavigation("/userprofile")}>Profile</li>
+            <li onClick={handleLogout}>Logout</li>
+
+            {/* Add more options here if needed */}
           </ul>
         </div>
       </div>

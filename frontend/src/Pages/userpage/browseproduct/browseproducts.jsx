@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import API_URL from "../../../config/apiconfig";
 import AuthContext from "../../../context/SessionContext";
+import Modal from "../../../components/dialogModal/cartModel";  // Import Modal component
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onAddToCart }) => {
   const { user } = useContext(AuthContext);
   const [isAdding, setIsAdding] = useState(false);
   const defaultImage =
@@ -29,13 +30,13 @@ const ProductCard = ({ product }) => {
       });
 
       if (response.ok) {
-        alert("Product added to cart!");
+        onAddToCart("Product added to cart!");
       } else {
-        alert("Failed to add product to cart.");
+        onAddToCart("Failed to add product to cart.");
       }
     } catch (error) {
       console.error("Fetch error:", error);
-      alert("Something went wrong!");
+      onAddToCart("Something went wrong!");
     }
 
     setIsAdding(false);
@@ -53,7 +54,7 @@ const ProductCard = ({ product }) => {
         <p className="store">{product.brand}</p>
         <h3 className="product-name">{product.name}</h3>
         <div className="price-section">
-          <p className="price">${product.price.toFixed(2)}</p>
+          <p className="price">Rs {product.price.toFixed(2)}</p>
           <button
             className="add-to-cart"
             onClick={handleAddToCart}
@@ -71,6 +72,8 @@ const ProductCard = ({ product }) => {
 function BrowseProducts() {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [modalMessage, setModalMessage] = useState("");  // Modal message state
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal visibility state
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -94,15 +97,24 @@ function BrowseProducts() {
     setSearchTerm(event.target.value);
   };
 
+  const handleAddToCart = (message) => {
+    setModalMessage(message); // Set the modal message
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
+
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="container">
+    <div className="productcontainer">
       <div className="banner"></div>
       <div className="product-section">
-        <div className="header">
+        <div className="productheader">
           <h1>Supplements And Equipment</h1>
           <input
             type="text"
@@ -114,10 +126,24 @@ function BrowseProducts() {
         </div>
         <div className="grid">
           {filteredProducts.map((product) => (
-            <ProductCard key={product._id} product={product} />
+            <ProductCard
+              key={product._id}
+              product={product}
+              onAddToCart={handleAddToCart}
+            />
           ))}
         </div>
       </div>
+
+      {/* Modal Popup */}
+      <Modal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        title="Cart Update"
+        message={modalMessage}
+        confirmText="OK"
+        cancelText=""
+      />
     </div>
   );
 }
