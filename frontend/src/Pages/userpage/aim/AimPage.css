@@ -1,0 +1,127 @@
+.page-plan {
+  padding: 20px;
+  margin-top: 120px;
+  align-items: center;
+}
+
+.aim-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.plan-list-horizontal {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  justify-content: center;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+
+.plan-card {
+  background-color: #1d1c24;
+  width: 300px;
+  min-height: 200px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(151, 38, 38, 0.6);
+  flex: 0 0 auto;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.8);
+}
+
+.plan-card h3 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.plan-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.plan-card li {
+  font-size: 16px;
+  margin: 5px 0;
+  margin-left: 20px;
+}
+
+.plan-duration {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  color: #bbb;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.modal1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal1-content {
+  background-color: #0f0f0f;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #612929;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(151, 38, 38, 0.6);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: rgb(182, 33, 33);
+  text-decoration: none;
+  cursor: pointer;
+}
+.img {
+  margin-left: 80px;
+  height: 200px;
+  width: 300px;
+  border: 1px solid #8d2828;
+  border-radius: 20px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.modal1-content ul {
+  list-style-type: none; /* Remove bullet points */
+  padding: 0;
+  margin-top: 15px; /* Remove padding */
+}
+.list-cont {
+  text-align: left;
+}
+.list-cont li {
+  margin-top: 5px;
+}
+.modal1-content h2 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
