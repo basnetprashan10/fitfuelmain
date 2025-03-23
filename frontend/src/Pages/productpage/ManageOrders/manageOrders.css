@@ -1,0 +1,109 @@
+.manage-orders-container {
+  margin-left: 250px;
+  margin-top: 100px;
+  padding: 40px;
+  width: calc(100% - 250px);
+}
+
+.header-title {
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.orders-list {
+  max-height: 650px; /* Adjust height as needed */
+  overflow-y: auto;
+  overflow-x: auto;
+  border: 1px solid #ddd;
+}
+
+.orders-list table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #212122;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders-list th,
+.orders-list td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: start;
+  font-size: 18px;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.orders-list th {
+  background-color: #007bff;
+  color: white;
+}
+
+.orders-list select {
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.pending {
+  background-color: #fff3cd; /* Light Yellow */
+  color: #856404; /* Dark Yellow */
+  border: 1px solid #ffeeba;
+}
+
+.processing {
+  background-color: #d1ecf1; /* Light Blue */
+  color: #0c5460; /* Dark Blue */
+  border: 1px solid #bee5eb;
+}
+
+.shipped {
+  background-color: #e2d9f3; /* Light Purple */
+  color: #4b0082; /* Dark Purple */
+  border: 1px solid #d6c7ee;
+}
+
+.delivered {
+  background-color: #d4edda; /* Light Green */
+  color: #155724; /* Dark Green */
+  border: 1px solid #c3e6cb;
+}
+
+.canceled {
+  background-color: #f8d7da; /* Light Red */
+  color: #721c24; /* Dark Red */
+  border: 1px solid #f5c6cb;
+}
+
+/* Ensure the select dropdown has proper styling */
+.orders-list select {
+  padding: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .manage-orders-container {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .orders-list {
+    max-height: 400px; /* Adjust height for smaller screens */
+  }
+
+  .orders-list th,
+  .orders-list td {
+    font-size: 16px;
+  }
+}
