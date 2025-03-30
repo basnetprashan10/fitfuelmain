@@ -1,0 +1,72 @@
+.hire-request-view {
+  padding: 20px;
+  text-align: center;
+}
+.hire-request-view-page {
+  margin-top: 150px;
+  margin-left: 250px;
+  width: calc(100% -250px);
+}
+.hire-request-view h1 {
+  margin-bottom: 20px;
+  font-size: 36px;
+}
+
+.request-list {
+  display: flex;
+  flex-direction: row; /* Change from column to row */
+  justify-content: center; /* Center boxes horizontally */
+  gap: 20px;
+  flex-wrap: wrap; /* Allow boxes to wrap on smaller screens */
+}
+
+.request-box {
+  background-color: rgba(29, 28, 36, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(172, 50, 50, 0.5);
+  width: 300px;
+  text-align: center;
+}
+
+.request-box h3 {
+  font-size: 30px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.request-box p {
+  font-size: 14px;
+  color: #fff;
+  margin-top: 10px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.accept-btn,
+.reject-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.accept-btn {
+  background-color: green;
+  color: white;
+}
+
+.reject-btn {
+  background-color: red;
+  color: white;
+}
+
+.accept-btn:hover,
+.reject-btn:hover {
+  opacity: 0.8;
+}
