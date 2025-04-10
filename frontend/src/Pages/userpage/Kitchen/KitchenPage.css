@@ -1,0 +1,182 @@
+/* kitchenPage.css */
+.kitchen-container-page {
+  padding: 20px;
+  margin-top: 120px;
+  margin-left: 150px;
+  margin-right: 150px;
+  margin-bottom: 100px;
+}
+
+.kitchen-title {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.macros-title {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.kitchen-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.meal-card {
+  background: #1d1c24;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  width: 100%; /* Adjust width as needed */
+  max-width: 700px; /* Prevent excessive width */
+  box-shadow: 0 4px 8px rgba(151, 38, 38, 0.6);
+}
+
+.meal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calorie-input {
+  width: 60px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.add-food-btn {
+  background: #b31717;
+  border: none;
+  cursor: pointer;
+}
+
+.food-list {
+  margin-top: 10px;
+  list-style: none;
+  padding-left: 0;
+}
+
+.food-item {
+  margin: 5px 0;
+}
+
+.total-calories {
+  background: rgb(6, 131, 110);
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 10px;
+  width: auto;
+  box-shadow: 0 4px 8px rgba(151, 38, 38, 0.6);
+}
+.total-calories input {
+  width: 100px;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #131212;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: red;
+}
+.add-meal-btn {
+  background: #193f37;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px rgba(151, 38, 38, 0.6);
+}
+.save-log-btn {
+  background: #193f37;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(151, 38, 38, 0.6);
+}
+.food-log {
+  margin-top: 20px;
+  padding: 10px;
+  background: #1d1c1c;
+  border-radius: 10px;
+}
+.food-log h4 {
+  font-size: 18px;
+  font-weight: bold;
+}
+.food-log ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+.food-log li {
+  margin: 10px 0;
+}
+.food-log ul ul {
+  padding-left: 20px;
+}
+/* Ensure the dropdown text is visible */
+.react-select__control {
+  background-color: #1d1c24 !important;
+  color: #fff !important;
+  border-color: #b31717 !important;
+}
+
+.react-select__menu {
+  background-color: #1d1c24 !important;
+}
+
+.react-select__option {
+  background-color: #1d1c24 !important;
+  color: #fff !important;
+}
+
+.react-select__option--is-selected {
+  background-color: #b31717 !important;
+}
+
+.react-select__single-value {
+  color: #fff !important;
+}
+.confirm-food-btn{
+  margin-top: 10px;
+}
