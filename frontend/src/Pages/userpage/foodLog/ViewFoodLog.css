@@ -1,0 +1,89 @@
+.food-log-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  overflow: hidden;
+  padding: 20px;
+  margin-top: 120px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.food-log-container {
+  padding: 20px;
+  width: 700px;
+  background-color: rgba(29, 28, 36, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(172, 50, 50, 0.5);
+}
+
+.food-log-container h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.log-entry {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.log-entry h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.log-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.log-item p {
+  margin: 5px 0;
+}
+
+.log-item p strong {
+  color: #ff7f50;
+}
+
+.btn-back {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-back:hover {
+  background-color: #45a049;
+}
+/* Additional Button Styling for View Details */
+.btn-details {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.btn-details:hover {
+  background-color: #0b7dda;
+}
+.log-item {
+  margin-top: 20px;
+}
