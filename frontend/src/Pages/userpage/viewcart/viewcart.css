@@ -162,3 +162,60 @@ h3 {
   border: 1px solid #ddd;
   border-radius: 4px;
 }
+
+
+/* Previous Orders Button Styles */
+.previous-orders-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.view-previous-orders-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.view-previous-orders-btn:hover {
+  background-color: #0056b3;
+}
+
+.previous-orders-dropdown {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  width: 350px;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: rgba(29, 28, 36, 0.95);
+  border: 1px solid #444;
+  border-radius: 5px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+.previous-orders-button:hover .previous-orders-dropdown {
+  display: block;
+}
+
+.previous-order {
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.ordered-items {
+  margin-top: 8px;
+}
+
+.ordered-items h4 {
+  margin-bottom: 5px;
+}

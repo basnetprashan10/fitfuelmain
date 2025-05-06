@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import "./viewcart.css";
-import AuthContext from "../../../context/SessionContext";
-import API_URL from "../../../config/apiconfig";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import CartModal from "../../../components/dialogModal/cartModel"; // Import the CartModal component
+import API_URL from "../../../config/apiconfig";
+import AuthContext from "../../../context/SessionContext";
+import "./viewcart.css";
 
 const ViewCart = () => {
   const { user } = useContext(AuthContext);
@@ -201,7 +202,7 @@ const ViewCart = () => {
       product_code: "EPAYTEST",
       total_amount: total_amount,
       transaction_uuid: transaction_uuid,
-      success_url: `${window.location.origin}/success`, 
+      success_url: `${window.location.origin}/success`, // Do not include extra data here
       failure_url: `${window.location.origin}/failure`,
       signed_field_names: "total_amount,transaction_uuid,product_code",
       signature: "", // Generate signature as before
@@ -244,6 +245,7 @@ const ViewCart = () => {
       key,
       encoder.encode(data)
     );
+
     return btoa(String.fromCharCode(...new Uint8Array(signature)));
   };
 
@@ -256,6 +258,20 @@ const ViewCart = () => {
     ) {
       showValidationModal("Please fill in all shipping address fields.");
       return;
+    }
+    const items = cartItems.map((item) => ({
+      productId: item.productId._id,
+      quantity: item.quantity,
+    }));
+
+    for (const item of items) {
+      const response = await fetch(
+        `${API_URL}/api/products/stock/${item.productId}`
+      );
+      const data = await response.json();
+      if (item.quantity > data.data.stock) {
+        return showErrorModal(`${data.data.name} is not in stock  `);
+      }
     }
 
     if (paymentMode === "esewa") {
@@ -272,36 +288,21 @@ const ViewCart = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/orders`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      await axios
+        .post(`${API_URL}/api/orders`, {
           userId: user.id,
-          items: cartItems.map((item) => ({
-            productId: item.productId._id,
-            quantity: item.quantity,
-          })),
+          items: items,
           shippingAddress,
           paymentMode,
           totalPrice: totalPrice + shippingFee,
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        showSuccessModal(
-          `Order placed successfully! Your order number is: ${data.order.orderNumber}`
-        );
-
-        // Clear the cart state without refreshing the page
-        setCartItems([]);
-        setTotalPrice(0);
-      } else {
-        console.error("Error placing order:", response.status);
-        showErrorModal("Error placing order, please try again.");
-      }
+        })
+        .then((res) => {
+          setCartItems([]);
+          setTotalPrice(0);
+        })
+        .catch((err) => {
+          showErrorModal(err.response.data.message);
+        });
     } catch (error) {
       console.error("Checkout error:", error);
       showErrorModal("Checkout error, please try again.");
@@ -329,6 +330,41 @@ const ViewCart = () => {
 
   return (
     <div className="page">
+      {/* ▼▼▼ PASTE THIS RIGHT AFTER THE OPENING DIV ▼▼▼ */}
+      <div className="previous-orders-button">
+        <button className="view-previous-orders-btn">
+          View Previous Orders
+        </button>
+        <div className="previous-orders-dropdown">
+          <h2>Your Previous Orders</h2>
+          {previousOrders.length > 0 ? (
+            previousOrders.map((order) => (
+              <div key={order._id} className="previous-order">
+                <p>
+                  <strong>Order Number:</strong> {order.orderNumber}
+                </p>
+                <p>
+                  <strong>Status:</strong> {order.orderStatus}
+                </p>
+                <div className="ordered-items">
+                  <h4>Items:</h4>
+                  {order.items.map((item) => (
+                    <div key={item._id}>
+                      <p>
+                        {item.productId.name} (x{item.quantity})
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No previous orders found</p>
+          )}
+        </div>
+      </div>
+      {/* ▲▲▲ END OF NEW BUTTON COMPONENT ▲▲▲ */}
+
       <h1>Your Cart</h1>
       <div className="cart-container">
         <div className="cart-items">
@@ -411,7 +447,7 @@ const ViewCart = () => {
               />
               <input
                 type="text"
-                placeholder="State"
+                placeholder="Provience"
                 value={shippingAddress.state}
                 onChange={(e) =>
                   setShippingAddress({
@@ -483,31 +519,6 @@ const ViewCart = () => {
                 Proceed to Checkout
               </button>
             </div>
-          </div>
-        )}
-        {previousOrders.length > 0 && (
-          <div className="previous-orders">
-            <h2>Your Previous Orders</h2>
-            {previousOrders.map((order) => (
-              <div key={order._id} className="previous-order">
-                <p>
-                  <strong>Order Number:</strong> {order.orderNumber}
-                </p>
-                <p>
-                  <strong>Status:</strong> {order.orderStatus}
-                </p>
-                <div className="ordered-items">
-                  <h4>Items:</h4>
-                  {order.items.map((item) => (
-                    <div key={item._id}>
-                      <p>
-                        {item.productId.name} (x{item.quantity})
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
           </div>
         )}
       </div>
