@@ -10,6 +10,7 @@ router.get("/", productController.getProducts);
 
 // Route to get a product by its ID
 router.get("/:id", productController.getProductById);
+router.get("/stock/:id", productController.getProductStockById);
 
 // Route to update a product by its ID
 router.put("/:id", productController.updateProduct);

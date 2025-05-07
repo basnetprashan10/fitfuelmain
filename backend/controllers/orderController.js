@@ -1,12 +1,19 @@
 // Import models for Order and Cart
 const Order = require("../models/orderModel");
 const Cart = require("../models/cartModel");
+const Product = require("../models/ProductModel");
 
-// Create a new order and clear the cart
 const createOrder = async (req, res) => {
   try {
     const { userId, items, shippingAddress, paymentMode, totalPrice } =
       req.body;
+
+    // Check for empty items array
+    if (!items || items.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "No items provided in the order" });
+    }
 
     // Create new order instance
     const newOrder = new Order({
@@ -17,18 +24,101 @@ const createOrder = async (req, res) => {
       totalPrice,
     });
 
-    // Save the order and clear the cart for the user
+    const productsToUpdate = [];
+
+    for (const item of items) {
+      const product = await Product.findById(item.productId);
+      if (!product) {
+        return res
+          .status(400)
+          .json({ message: `Product with ID ${item.productId} not found` });
+      }
+
+      const remainingStock = product.stock - item.quantity;
+      if (remainingStock < 0) {
+        return res
+          .status(400)
+          .json({ message: `${product.name} is not in stock` });
+      }
+      productsToUpdate.push({
+        productId: item.productId,
+        newStock: remainingStock,
+      });
+    }
+
     await newOrder.save();
-    await clearCart(userId);
+
+    for (const productUpdate of productsToUpdate) {
+      await Product.updateOne(
+        { _id: productUpdate.productId },
+        { stock: productUpdate.newStock }
+      );
+    }
+
+    if (userId) {
+      await clearCart(userId);
+    }
 
     res
       .status(201)
       .json({ message: "Order created successfully", order: newOrder });
   } catch (error) {
     console.error("Error creating order:", error);
-    res.status(500).json({ message: "Internal server error" });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message }); // Include error message
   }
 };
+
+// Create a new order and clear the cart
+// const createOrder = async (req, res) => {
+//   try {
+//     const { userId, items, shippingAddress, paymentMode, totalPrice } =
+//       req.body;
+
+//     // Create new order instance
+//     const newOrder = new Order({
+//       userId,
+//       items,
+//       shippingAddress,
+//       paymentMode,
+//       totalPrice,
+//     });
+
+//     items.forEach(async (item) => {
+//       const product = await Product.findById(item.productId);
+//       const productStock = product.stock;
+//       const isLessItem = productStock - item.quantity;
+//       if (isLessItem < 0) {
+//         throw new Error(`${product.name} is not in stock`);
+//         // res.status(400).json({ message: `${product.name} is not in stock` });
+//       }
+//     });
+
+//     // Save the order and clear the cart for the user
+//     // await newOrder.save();
+
+//     // for (item of items) {
+//     //   const product = await Product.findById(item.productId);
+//     //   const productStock = product.stock;
+//     //   await Product.updateOne(
+//     //     { _id: item.productId },
+//     //     {
+//     //       stock: productStock - item.quantity,
+//     //     }
+//     //   );
+//     // }
+
+//     // await clearCart(userId);
+
+//     res
+//       .status(201)
+//       .json({ message: "Order created successfully", order: newOrder });
+//   } catch (error) {
+//     console.error("Error creating order:", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// };
 
 // Clear cart for the user (helper function)
 const clearCart = async (userId) => {

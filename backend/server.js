@@ -12,9 +12,9 @@ const app = express();
 // Middleware
 app.use(express.json()); // Parse incoming JSON requests
 app.use(cors()); // Enable CORS
-app.use("/images", express.static(path.join(__dirname, "images"))); // Serve static images from the 'images' directory
+app.use("/images", express.static(path.join(__dirname, "images"))); // Serve static images
 
-// Routess
+// Routes
 app.use("/api/signup", require("./routes/signUpRoute"));
 app.use("/api/login", require("./routes/loginRoute"));
 app.use("/api/dashboard", require("./routes/loginRoute"));

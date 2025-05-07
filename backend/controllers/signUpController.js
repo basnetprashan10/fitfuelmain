@@ -4,7 +4,8 @@ const Bcrypt = require("bcryptjs");
 // Fetch all users excluding the password field
 const getUser = async (req, res) => {
   try {
-    const users = await Signup.find().select("-password");
+    const { id } = req.params;
+    const users = await Signup.findById(id).select("-password");
     res.status(200).json({ message: "success", data: users });
   } catch (err) {
     console.error(err);
@@ -45,9 +46,17 @@ const getUserCount = async (req, res) => {
 
 // Sign up a new user, hashing the password before saving
 const signUp = async (req, res) => {
-  const { fullname, username, email, age, gender, password } = req.body;
+  const { fullname, username, email, age, gender, password, role } = req.body;
 
-  if (!fullname || !username || !email || !age || !gender || !password) {
+  if (
+    !fullname ||
+    !username ||
+    !email ||
+    !age ||
+    !gender ||
+    !password ||
+    !role
+  ) {
     return res
       .status(400)
       .json({ message: "Please fill all required fields." });
@@ -62,6 +71,7 @@ const signUp = async (req, res) => {
       email,
       age,
       gender,
+      user_type: role,
       password: hashpassword,
     });
 
